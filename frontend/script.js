@@ -36,6 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const leadData = {
       email,
+      phone: "0000000000", // Dummy phone since input is missing in form
       creditScore: Number(creditScore),
       ageGroup,
       familyStatus,
@@ -55,7 +56,8 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorMsg = await response.text();
+        throw new Error(`HTTP ${response.status}: ${errorMsg}`);
       }
 
       const result = await response.json();
