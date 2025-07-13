@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lead Scoring Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>AI Lead Scoring Dashboard</h1>
+
+    <form id="lead-form">
+      <label>Email: <input type="email" id="email" name="email" required /></label>
+      <label>Phone: <input type="tel" id="phone" name="phone" required /></label>
+      <label>Income (INR): <input type="number" id="income" name="income" required /></label>
+      <label>Credit Score (300–850): <input type="number" id="creditScore" name="creditScore" min="300" max="850" required /></label>
+      
+      <label>Age Group:
+        <select id="ageGroup" name="ageGroup">
+          <option value="18-25">18–25</option>
+          <option value="26-35">26–35</option>
+          <option value="36-50">36–50</option>
+          <option value="51+">51+</option>
+        </select>
+      </label>
+
+      <label>Family Background:
+        <select id="family" name="familyStatus">
+          <option value="Single">Single</option>
+          <option value="Married">Married</option>
+          <option value="Married with Kids">Married with Kids</option>
+        </select>
+      </label>
+
+      <label>Comments: <textarea id="comments" name="comments"></textarea></label>
+      <label><input type="checkbox" id="consent" name="consent" required /> I consent to data processing</label>
+      <button type="submit">Submit</button>
+    </form>
+
+    <hr />
+
+    <h2>Lead Scores</h2>
+    <table id="leads-table">
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Initial Score</th>
+          <th>Re-ranked Score</th>
+          <th>Comments</th>
+           <th>Reason</th>
+        </tr>
+      </thead>
+      <tbody id="leadTableBody"></tbody>
+    </table>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
