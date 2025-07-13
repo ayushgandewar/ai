@@ -1,87 +1,98 @@
-document.addEventListener("DOMContentLoaded", function () {
-  console.log("✅ Script loaded and DOM is ready");
+/* General Page Styling */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f0f4f8;
+  margin: 0;
+  padding: 20px;
+  color: #333;
+}
 
-  // ✅ 1. Load stored leads on page load
-  const savedLeads = JSON.parse(localStorage.getItem("leads")) || [];
-  const table = document.getElementById("leadTableBody");
+/* Container Box */
+.container {
+  max-width: 800px;
+  margin: auto;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
+}
 
-  savedLeads.forEach(lead => {
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td>${lead.email}</td>
-      <td>${lead.initial_score}</td>
-      <td>${lead.reranked_score}</td>
-      <td>${lead.comments}</td>
-    `;
-    table.appendChild(row);
-  });
+/* Header */
+h1, h2 {
+  text-align: center;
+  color: #1a73e8;
+  margin-bottom: 20px;
+}
 
-  // ✅ 2. Handle form submit
-  document.getElementById("lead-form").addEventListener("submit", async function (e) {
-    e.preventDefault();
-    console.log("📩 Form submitted");
+/* Form Elements */
+form label {
+  display: block;
+  margin-top: 15px;
+  font-weight: 500;
+}
 
-    const email = document.getElementById("email").value;
-    const creditScore = document.getElementById("creditScore").value;
-    const ageGroup = document.getElementById("ageGroup").value;
-    const familyStatus = document.getElementById("family").value;
-    const income = document.getElementById("income").value;
-    const comments = document.getElementById("comments").value;
-    const consent = document.getElementById("consent").checked;
+form input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  transition: border-color 0.3s ease;
+}
 
-    if (!consent) {
-      alert("Please provide consent to proceed.");
-      return;
-    }
+form input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #1a73e8;
+}
 
-    const leadData = {
-      email,
-      creditScore: Number(creditScore),
-      ageGroup,
-      familyStatus,
-      income: Number(income),
-      comments,
-    };
+/* Consent Checkbox */
+form label input[type="checkbox"] {
+  width: auto;
+  margin-right: 10px;
+}
 
-    console.log("📤 Sending data:", leadData);
+/* Submit Button */
+button {
+  margin-top: 20px;
+  padding: 12px 20px;
+  background: #1a73e8;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
 
-    try {
-      const response = await fetch("http://127.0.0.1:8000/score", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(leadData),
-      });
+button:hover {
+  background: #155dc0;
+}
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+/* Table Styling */
+table {
+  width: 100%;
+  margin-top: 25px;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+}
 
-      const result = await response.json();
-      console.log("✅ Received result:", result);
+th {
+  background: #1a73e8;
+  color: white;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+}
 
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${email}</td>
-        <td>${result.initial_score}</td>
-        <td>${result.reranked_score}</td>
-        <td>${comments}</td>
-      `;
-      table.appendChild(row);
+td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  background: #f9f9f9;
+}
 
-      // ✅ Save to localStorage
-      savedLeads.push({
-        email,
-        initial_score: result.initial_score,
-        reranked_score: result.reranked_score,
-        comments
-      });
-      localStorage.setItem("leads", JSON.stringify(savedLeads));
-
-    } catch (error) {
-      console.error("❌ Error submitting data:", error);
-      alert("Failed to submit data. Check backend or API.");
-    }
-  });
-});
+tr:hover td {
+  background: #f1f5ff;
+}
