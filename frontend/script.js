@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("📤 Sending data:", leadData);
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/score", {
+      const response = await fetch("https://ai-2-zzcx.onrender.com/score", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
